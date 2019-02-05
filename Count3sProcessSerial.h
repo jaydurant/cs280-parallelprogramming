@@ -24,5 +24,6 @@ class Count3sProcessSerial{
 		static int BinaryFileTotal(std::string strFile, int bytes);
 		static void ReadBinaryFile(std::string strFile, int*& numbers);
 		static void CountThrees(int sizeOfFile, int*& numbers);
+		static int CountThreesPartial(int start, int end, int*& numbers);
 };
 #endif
