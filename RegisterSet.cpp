@@ -18,16 +18,19 @@ using namespace std;
 
 RegisterSet::RegisterSet(){
     setRegisterType('i', 9);
+    registerFlags = new char[9];
 }
 
 RegisterSet::RegisterSet(char type, int count){
     setRegisterType(type, count);
+    registerFlags = new char[count];
 }
 
 RegisterSet::RegisterSet(char type, int size, int count){
     if (type == 'b'){
          char array[size][count];
         currentRegisters.charRegister = (char**)array;
+        registerFlags = new char[count];
     }
 }
 

@@ -22,5 +22,12 @@ class IllegalArgumentException{
         IllegalArgumentException(T newValue);
         T getValue();
 };
-
+template <class T>
+IllegalArgumentException<T>::IllegalArgumentException(T newValue){
+    value = newValue;
+}
+template <class T>
+T IllegalArgumentException<T>::getValue(){
+    return value;
+}
 #endif

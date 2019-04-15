@@ -13,10 +13,12 @@ Date: 02/27/2019
 #ifndef REGISTERSET_H
 #define REGISTERSET_H
 #include <iostream>
+#include <string>
 #include "IllegalArgumentException.h"
+#include <typeinfo>
 
 using namespace std;
-
+template <class T>
 class RegisterSet{
     enum RegisterType : char {
         INTEGERARR = 'i',
@@ -29,9 +31,10 @@ class RegisterSet{
 
     private:
         char currentRegisterType;
+        char *registerFlags;
         short registerCount;
         RegisterType selectedRegister;
-
+        
         union registers{
             int *intRegister;
             unsigned int *unsignedIntRegister;
@@ -55,7 +58,12 @@ class RegisterSet{
         template <class T>
         void displayArrValues(T * arr){
             for (int i = 0 ; i < registerCount; i++){
-                cout << arr[i] << endl;
+                string displayString ="R";
+                T value = arr[i];
+                displayString += i < 10 ? ("0" + to_string(i)) : to_string(i);
+                displayString += ": 0x" + to_string(arr[i]);
+                displayString += " " + string(1, *typeid(value).name());
+                cout << displayString << endl;
             }
         }
 
@@ -92,15 +100,17 @@ class RegisterSet{
                 }
 
                 array[registerIndex] = value;
+
+                displayArrValues(array);
             }
             else{
-                throw IllegalArgumentException<T> e;
+                throw IllegalArgumentException<int>(registerIndex);
             }
         }
 
         template <class T>
         T get(int registerIndex){
-                 T * array;
+            T * array;
 
             switch(selectedRegister){
                 case INTEGERARR:
