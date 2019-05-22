@@ -4,7 +4,7 @@ Name: Jason Durant
 
 Course: Parallel & Cloud Programming
 
-CRN: 39072
+CRN:
 
 Assignment: CountThreesProcessSerial
 
@@ -16,8 +16,6 @@ Date: 01/28/2019
 #include<fstream>
 #include<vector>
 #include "Count3sProcessSerial.h"
-
-#include "Timer.h"
 
 using namespace std;
 
@@ -70,13 +68,9 @@ void Count3sProcessSerial::CountThrees(int numbersTotal, int*& numbers){
 
 
 int main(){
-	TimerNew timer;
-	timer.start();
 	int numbersTotal= Count3sProcessSerial::BinaryFileTotal("./threesData.bin",4);
+	cout << numbersTotal << endl;
 	Count3sProcessSerial::ReadBinaryFile("./threesData.bin", numbers);
 	Count3sProcessSerial::CountThrees(numbersTotal, numbers);
 
-	timer.stop();
-	double duration = timer.getElapsedTimeInMilliSec();
-	printf("duration %.4f ms", duration);
 }

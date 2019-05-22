@@ -9,6 +9,17 @@ CRN: 39072
 Assignment: Final Project
 Date: 05/22/2019
 
+/*
+
+Name: Jason Durant
+
+Course: Parallel & Cloud Programming
+
+CRN: 39072
+
+Assignment: Count3sIPC
+
+Date: 05/22/2019
 */
 
 #ifndef ParallelTeam_H
@@ -17,13 +28,15 @@ Date: 05/22/2019
 #include <string>
 
 using namespace std;
+
 class ParallelTeam{
-	const int PARTITION_COUNT = 5;
+
 
 	private:
 		ComputeObj *computeObjects;
+		const int PARTITION_COUNT = 5;
 		int *numbers;
-		int total;
+		int total = 0;
 		int paritionCount = 5;
 		int **partitionArrays = new  int*[PARTITION_COUNT];
 		string strFile;
@@ -31,11 +44,11 @@ class ParallelTeam{
 	public:
 		ParallelTeam(string strFile);
 
+		ParallelTeam();
+
 		int readBinaryFile();
 
-		int binaryFileTotal();
-
-		void paritionData();
+		void partitionData();
 
 		void startComputation();
 
