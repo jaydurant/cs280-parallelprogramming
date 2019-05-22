@@ -26,8 +26,8 @@ Date: 02/18/2019
 #include <string>
 #include <fstream>
 #include <vector>
-
 #include "Count3sIPC.h"
+#include "Timer.h"
 
 using namespace std;
 
@@ -112,6 +112,8 @@ enum{
 };
 
 int main(int argc, char* argv[]){
+	TimerNew timer;
+	timer.start();
 	int sharedMemoryHandle;
 	int idSemaphoreSetHandle;
 	sharedStruc *buffer; //shared memory buffer
@@ -164,6 +166,9 @@ int main(int argc, char* argv[]){
 	DeleteSemaphoreSet(idSemaphoreSetHandle);
 
 	cout << (*buffer).total << endl;
+	timer.stop();
+	double duration = timer.getElapsedTimeInMilliSec();
+	printf("%.4f ms", duration);
 	exit(0);
 }
 

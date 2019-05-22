@@ -8,42 +8,61 @@ CRN: 39072
 
 Assignment: Timer
 
-Date: 04/28/2019
+Date: 04/30/2019
 
 */
+
+#include "Timer.h"
 
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
-#include "Timer.h"
-#include <chrono>
-using namespace std::chrono;
+using namespace std;
 
-Timer::Timer() {
-	startCount = 0;
-	endCount = 0;
+
+Timer::Timer(){
+	startCount.tv_sec = startCount.tv_nsec = 0;
+	endCount.tv_sec = endCount.tv_nsec = 0;
+	stopped = 0;
+	startTimeInMicroSec = 0;
+	endTimeInMicroSec = 0;
 }
 
 void Timer::start(){
-	milliseconds ms = duration_cast< milliseconds >(
-		    system_clock::now().time_since_epoch()
-		);
-
-	startCount = ms.count();
+	stopped = 0;
+	clock_gettime(CLOCK_MONOTONIC, &startCount);
 }
 
 void Timer::stop(){
-	milliseconds ms = duration_cast< milliseconds >(
-		    system_clock::now().time_since_epoch()
-		);
-
-	endCount = ms.count();
+	stopped = 1;
+	clock_gettime(CLOCK_MONOTONIC, &endCount);
 }
 
-int Timer::results(){
-	return endCount - startCount;
-}
-Timer::~Timer() {
-	// TODO Auto-generated destructor stub
+double Timer::getElapsedTime(){
+	double dur = (endCount.tv_sec + 1.0e-9*endCount.tv_nsec) - (startCount.tv_sec + 1.0e-9*startCount.tv_nsec);
+	return dur;
 }
 
+double Timer::getElapsedTimeInSec(){
+	return this->getElapsedTime();
+}
+
+double Timer::getElapsedTimeInMilliSec(){
+	double car = (1000 * endCount.tv_sec + 1.0e-6*endCount.tv_nsec);
+	printf("%ld \n",endCount.tv_nsec);
+	double boat = (1000 * startCount.tv_sec + 1.0e-6*endCount.tv_nsec);
+	printf("%.4f \n", car);
+	printf("%.4f \n", boat);
+
+	double dur = (1000 * endCount.tv_sec + 1.0e-6*endCount.tv_nsec) - (1000 * startCount.tv_sec + 1.0e-6*startCount.tv_nsec);
+	return dur;
+}
+
+double Timer::getElapsedTimeInMicroSec(){
+	double car = (1000000 * endCount.tv_sec + endCount.tv_nsec);
+	double boat = (1000000 * startCount.tv_sec + startCount.tv_nsec);
+	printf("%.4f \n", car);
+	printf("%.4f \n", boat);
+	double dur = (1000000 * endCount.tv_sec + endCount.tv_nsec) - (1000000 * startCount.tv_sec + startCount.tv_nsec);
+	return dur;
+}

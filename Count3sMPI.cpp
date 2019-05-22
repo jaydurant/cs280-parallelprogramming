@@ -28,8 +28,8 @@ Date: 04/14/2019
 #include <fstream>
 #include <vector>
 #include <mpi.h>
-
 #include "Count3sMPI.h"
+#include "Timer.h"
 
 using namespace std;
 
@@ -89,6 +89,8 @@ int  Count3sMPI::CountThreesMid(int*& numbers,int start, int end){
 }
 
 int main(int argc, char* argv[]){
+	TimerNew timer;
+	timer.start();
 	int rank;
 	int *numbers;
 	int comm_sz;
@@ -113,7 +115,7 @@ int main(int argc, char* argv[]){
 	}else{
 		for (int i = 1; i < comm_sz; i++){
 			MPI_Recv(&count, 1, MPI_INT, i, 0, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
-			result += count;
+			result += count;MPI_Init
 		}
 
 		int rankZeroCount = Count3sMPI::CountThreesMid(numbers, rank, partition);
@@ -122,6 +124,9 @@ int main(int argc, char* argv[]){
 	}
 
 	MPI_Finalize();
+	timer.stop();
+	float duration = timer.getElapsedTimeInMilliSec();
+	printf("%.2f ms", duration);
 
 	return 0;
 

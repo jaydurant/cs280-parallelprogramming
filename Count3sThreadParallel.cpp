@@ -24,6 +24,8 @@ Date: 02/11/2019
 #include <unistd.h>
 #include <sys/wait.h>
 
+#include "Timer.h"
+
 
 using namespace std;
 
@@ -139,6 +141,8 @@ void *Count3sThreadParallel::CountThreesPartialThread(void *arg){
 int main(){
 	threedatastr.numbersTotal = 0;
 	threedatastr.sum = 0;
+	TimerNew timer;
+	timer.start();
 
 	int totalSize= Count3sThreadParallel::BinaryFileTotal("./threesData.bin", 4);
 	Count3sThreadParallel::ReadBinaryFile("./threesData.bin", numbers);
@@ -165,5 +169,11 @@ int main(){
 
 	cout << threedatastr.sum << endl;
 	pthread_mutex_destroy(&mutexthreesum);
+	timer.stop();
+	double duration = timer.getElapsedTimeInMilliSec();
+
+	printf("%.4f ms", duration);
 	pthread_exit(NULL);
+
+
 }

@@ -22,6 +22,8 @@ Date: 02/04/2019
 #include <unistd.h>
 #include <sys/wait.h>
 
+#include "Timer.h"
+
 
 using namespace std;
 
@@ -104,6 +106,9 @@ int Count3sProcessParallel::CountThreesPartial(int*& numbers, int size){
 
 
 int main(){
+	TimerNew timer;
+	timer.start();
+
 	int totalSize= Count3sProcessParallel::BinaryFileTotal("./threesData.bin", 4);
 	int start = 0;
 	int midpoint = totalSize / 2;
@@ -124,5 +129,11 @@ int main(){
 		exit(0);
 	}
 
+
 	wait(NULL);
+
+	timer.stop();
+
+	float duration = timer.getElapsedTimeInMilliSec();
+	printf("%.4f ms", duration);
 }

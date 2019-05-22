@@ -16,10 +16,8 @@ Date: 01/28/2019
 #include<fstream>
 #include<vector>
 #include "Count3sProcessSerial.h"
-#include <stdio.h>
-#include <sys/types.h>
-#include <unistd.h>
 
+#include "Timer.h"
 
 using namespace std;
 
@@ -70,47 +68,15 @@ void Count3sProcessSerial::CountThrees(int numbersTotal, int*& numbers){
 	cout << count << endl;
 }
 
-int Count3sProcessSerial::CountThreesPartial(int start, int end, int*& numbers){
-	int count = 0;
-
-	for (int i ;i < end; i++){
-		if (numbers[i] == 3){
-			cout << count << endl;
-			count++;
-		}
-
-	}
-	return count;
-}
-
 
 int main(){
-	int numbersTotal= Count3sProcessSerial::BinaryFileTotal("./threesData.bin", 4);
+	TimerNew timer;
+	timer.start();
+	int numbersTotal= Count3sProcessSerial::BinaryFileTotal("./threesData.bin",4);
 	Count3sProcessSerial::ReadBinaryFile("./threesData.bin", numbers);
+	Count3sProcessSerial::CountThrees(numbersTotal, numbers);
 
-	int start = 0;
-	int step = 2;
-
-
-	//int totalOne = Count3sProcessSerial::CountThreesPartial(start, numbersTotal / 2, numbers);
-
-	pid_t pid = fork();
-	if (pid == 0){
-		int total = 0;
-		int half = numbersTotal / 2;
-		total = Count3sProcessSerial::CountThreesPartial(start, numbersTotal / 2, numbers);
-		cout << numbersTotal << endl;
-		cout << half << endl;
-		cout << total << endl;
-		cout << "child exiting" << endl;
-		exit(total);
-	}
-
-	printf("I'm %d: myvar is \n", getpid());
-	//cout << total << endl;
-	int status = 0;
-	pid_t childpid = wait(&status);
-	int childReturnValue = WEXITSTATUS(status);
-	cout << "child return value" << endl;
-	printf("Return value was %d /n", childReturnValue);
+	timer.stop();
+	double duration = timer.getElapsedTimeInMilliSec();
+	printf("duration %.4f ms", duration);
 }

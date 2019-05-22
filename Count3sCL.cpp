@@ -25,7 +25,7 @@ Date: 04/28/2019
 #include <fstream>
 #include <vector>
 #include "CL/cl.hpp"
-
+#include "Timer.h"
 #include "Count3sCL.h"
 
 using namespace std;
@@ -87,6 +87,8 @@ int  Count3sCL::CountThreesMid(int*& numbers,int start, int end){
 
 int main(int argc, char* argv[]){
 		try{
+		TimerNew timer;
+		timer.start();
 		int *numbers;
 		int comm_sz;
 		int total = Count3sCL::BinaryFileTotal("./threesData.bin", 4);
@@ -167,7 +169,9 @@ int main(int argc, char* argv[]){
 	    }
 
 	    std::cout<< result << endl;
-
+	    timer.stop();
+	    double duration = timer.getElapsedTimeInMilliSec();
+	    printf("%.4f ms", duration);
 	    return 0;
 
 	} catch (cl::Error& e){
