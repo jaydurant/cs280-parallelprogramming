@@ -89,7 +89,7 @@ int  Count3sMPI::CountThreesMid(int*& numbers,int start, int end){
 }
 
 int main(int argc, char* argv[]){
-	TimerNew timer;
+	Timer timer;
 	timer.start();
 	int rank;
 	int *numbers;
@@ -102,7 +102,7 @@ int main(int argc, char* argv[]){
 	int result = 0;
 
     //Expects number of processes to be 3
-	MPI_Init(&argc, &argv);http://marketplace.eclipse.org/marketplace-client-intro?mpc_install=2235823
+	MPI_Init(&argc, &argv);
 	MPI_Comm_size(MPI_COMM_WORLD, &comm_sz);
 	MPI_Comm_rank(MPI_COMM_WORLD, &rank);
 	int partition = totalNumbers / comm_sz;
@@ -115,7 +115,7 @@ int main(int argc, char* argv[]){
 	}else{
 		for (int i = 1; i < comm_sz; i++){
 			MPI_Recv(&count, 1, MPI_INT, i, 0, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
-			result += count;MPI_Init
+			result += count;
 		}
 
 		int rankZeroCount = Count3sMPI::CountThreesMid(numbers, rank, partition);

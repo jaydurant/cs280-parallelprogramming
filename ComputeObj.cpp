@@ -1,4 +1,26 @@
+/*
 
+Name: Jason Durant
+
+Course: Parallel & Cloud Programming
+
+CRN: 39072
+
+Assignment: Final Project
+Date: 05/22/2019
+
+/*
+
+Name: Jason Durant
+
+Course: Parallel & Cloud Programming
+
+CRN: 39072
+
+Assignment: Project Final
+
+Date: 05/22/2019
+*/
 
 //Abstract ComputeObj
 
@@ -26,7 +48,7 @@ class ComputeObj{
 
 		virtual void waitForAllTeamMembers() = 0;
 
-		virtual void getSizeOfTeam() = 0;
+		virtual int getSizeOfTeam() = 0;
 
 		virtual void setEntryFunction(executionEntryFunc startFunc) = 0;
 

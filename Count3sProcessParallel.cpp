@@ -106,7 +106,7 @@ int Count3sProcessParallel::CountThreesPartial(int*& numbers, int size){
 
 
 int main(){
-	TimerNew timer;
+	Timer timer;
 	timer.start();
 
 	int totalSize= Count3sProcessParallel::BinaryFileTotal("./threesData.bin", 4);

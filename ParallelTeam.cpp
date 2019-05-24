@@ -1,12 +1,37 @@
 /*
 
- */
+Name: Jason Durant
+
+Course: Parallel & Cloud Programming
+
+CRN: 39072
+
+Assignment: Final Project
+Date: 05/22/2019
+
+/*
+
+Name: Jason Durant
+
+Course: Parallel & Cloud Programming
+
+CRN: 39072
+
+Assignment: Project Final
+
+Date: 05/22/2019
+*/
 
 #include "ParallelTeam.h"
 #include <string>
 #include <iostream>
 #include <fstream>
-
+#include "ComputeObj.cpp"
+#include "Thread_ComputeObj.cpp"
+#include "MPI_ComputeObj.cpp"
+#include "OpenCL_ComputeObj.cpp"
+#include "PROCESS_ComputeObj.cpp"
+#include "CUDA_ComputeObj.cpp"
 
 using namespace std;
 
@@ -57,5 +82,25 @@ void ParallelTeam::partitionData(){
 }
 
 void ParallelTeam::startComputation(){
+
+	ComputeObj **dynamic_array = new ComputeObj*[PARTITION_COUNT];
+	dynamic_array[0] = new Thread_ComputeObj(partitionArrays[0]);
+	dynamic_array[1] = new MPI_ComputeObj(partitionArrays[1]);
+	dynamic_array[2] = new Process_ComputeObj(partitionArrays[2]);
+	dynamic_array[3] = new OpenCL_ComputeObj(partitionArrays[3]);
+	dynamic_array[4] = new CUDA_ComputeObj(partitionArrays[4]);
+
+}
+
+
+int main(int argc, char* argv[]){
+	ParallelTeam team;
+
+
+	team.readBinaryFile();
+	team.partitionData();
+
+	team.startComputation();
+
 
 }

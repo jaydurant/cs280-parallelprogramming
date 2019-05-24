@@ -37,6 +37,7 @@ int CreateSemaphoreSet(int n, unsigned short* vals);
 void DeleteSemaphoreSet(int id);
 void LockSemaphore(int id, int i);
 void UnlockSemaphore(int id, int i);
+SetAllSemaphores
 
 #if !defined(__GNU_LIBRARY__) || defined(_SEM_SEMUN_UNDEFINED)
 union semun
@@ -112,7 +113,7 @@ enum{
 };
 
 int main(int argc, char* argv[]){
-	TimerNew timer;
+	Timer timer;
 	timer.start();
 	int sharedMemoryHandle;
 	int idSemaphoreSetHandle;

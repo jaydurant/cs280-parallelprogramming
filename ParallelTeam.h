@@ -17,7 +17,7 @@ Course: Parallel & Cloud Programming
 
 CRN: 39072
 
-Assignment: Count3sIPC
+Assignment: Project Final
 
 Date: 05/22/2019
 */
@@ -33,7 +33,7 @@ class ParallelTeam{
 
 
 	private:
-		ComputeObj *computeObjects;
+		ComputeObj **computeObjects;
 		const int PARTITION_COUNT = 5;
 		int *numbers;
 		int total = 0;
